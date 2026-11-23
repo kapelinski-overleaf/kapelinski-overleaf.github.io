@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overleaf Contributions</title>
+<meta name="description" content="Cristhian Kapelinski's writing activity on Overleaf, drawn like GitHub's contribution graph.">
+<style>
+:root {
+  --bg: #ffffff; --fg: #1f2328; --muted: #59636e; --line: #d1d9e0; --card: #f6f8fa;
+  --l0: #eff2f5; --l1: #aceebb; --l2: #4ac26b; --l3: #2da44e; --l4: #116329;
+  --tip-bg: #25292e; --tip-fg: #ffffff; --accent: #0969da;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117; --fg: #f0f6fc; --muted: #9198a1; --line: #3d444d; --card: #151b23;
+    --l0: #151b23; --l1: #033a16; --l2: #196c2e; --l3: #2ea043; --l4: #56d364;
+    --tip-bg: #3d444d; --tip-fg: #f0f6fc; --accent: #4493f8;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg);
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
+main { max-width: 1012px; margin: 0 auto; padding: 32px 16px 64px; }
+header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+.logo { width: 44px; height: 44px; border-radius: 50%; background: #138a07; display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 20px; flex: none; }
+header h1 { font-size: 22px; margin: 0; font-weight: 600; }
+header p { margin: 0; color: var(--muted); }
+header a { color: var(--accent); text-decoration: none; }
+.topo { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+.topo h2 { font-size: 16px; font-weight: 400; margin: 0; }
+.topo h2 b { font-weight: 600; }
+.anos { display: flex; gap: 4px; flex-wrap: wrap; }
+.anos button { font: inherit; font-size: 12px; padding: 4px 12px; border-radius: 6px; border: 1px solid transparent; background: none; color: var(--muted); cursor: pointer; }
+.anos button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.anos button:hover:not([aria-pressed="true"]) { background: var(--card); }
+.quadro { border: 1px solid var(--line); border-radius: 6px; padding: 16px 16px 10px; }
+.rolagem { overflow-x: auto; }
+svg { display: block; }
+svg text { fill: var(--fg); font-size: 11px; }
+rect.d { rx: 2; ry: 2; }
+rect.d:hover { stroke: var(--fg); stroke-width: 1; }
+.rodape { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 6px; font-size: 12px; color: var(--muted); }
+.legenda { display: flex; align-items: center; gap: 3px; }
+.legenda i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.dica { position: fixed; pointer-events: none; background: var(--tip-bg); color: var(--tip-fg); font-size: 12px; padding: 6px 10px; border-radius: 6px; opacity: 0; transition: opacity .08s; z-index: 5; white-space: nowrap; }
+.dica b { font-weight: 600; }
+.numeros { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 16px 0 32px; }
+.numeros div { border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; }
+.numeros strong { display: block; font-size: 24px; font-weight: 600; line-height: 1.2; }
+.numeros span { color: var(--muted); font-size: 12px; }
+h3 { font-size: 16px; font-weight: 400; margin: 0 0 12px; }
+.meses { display: grid; grid-template-columns: 90px minmax(0, 1fr) 150px; gap: 6px 12px; align-items: center; font-size: 13px; }
+.meses .trilho { height: 8px; border-radius: 4px; background: var(--card); overflow: hidden; }
+.meses .trilho i { display: block; height: 100%; background: var(--l3); border-radius: 4px; }
+.meses .n { color: var(--muted); font-variant-numeric: tabular-nums; }
+.nota { margin-top: 32px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--line); padding-top: 12px; }
+@media (max-width: 560px) { .meses { grid-template-columns: 70px minmax(0, 1fr); } .meses .n { grid-column: 2; margin-top: -6px; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="logo">O</div>
+    <div><h1>Overleaf contributions</h1><p>Cristhian Kapelinski's paper writing, drawn like GitHub's contribution graph · <a href="https://github.com/CristhianKapelinski">GitHub profile</a></p></div>
+  </header>
+
+  <div class="topo">
+    <h2 id="titulo"></h2>
+    <div class="anos" id="anos"></div>
+  </div>
+  <div class="quadro">
+    <div class="rolagem"><svg id="grade" role="img"></svg></div>
+    <div class="rodape">
+      <span>Each contribution is one entry in a project's Overleaf history with me among its authors.</span>
+      <span class="legenda">Less <i style="background:var(--l0)"></i><i style="background:var(--l1)"></i><i style="background:var(--l2)"></i><i style="background:var(--l3)"></i><i style="background:var(--l4)"></i> More</span>
+    </div>
+  </div>
+
+  <div class="numeros" id="numeros"></div>
+
+  <h3>Contributions by month</h3>
+  <div class="meses" id="meses"></div>
+
+  <p class="nota" id="nota"></p>
+</main>
+<div class="dica" id="dica"></div>
+<script>
+const D = {"dias":{"2026-11-22":[27,2],"2026-06-19":[6,2],"2026-06-17":[9,2],"2026-11-21":[14,2],"2026-11-20":[101,3],"2026-11-19":[92,4],"2026-11-18":[153,4],"2026-11-17":[279,4],"2026-11-16":[13,3],"2026-10-29":[42,6],"2026-10-28":[36,5],"2026-10-25":[34,3],"2026-10-24":[16,4],"2026-10-06":[84,4],"2026-09-28":[11,2],"2026-09-27":[14,3],"2026-09-21":[25,4],"2026-09-08":[28,3],"2026-08-24":[38,2],"2026-10-30":[20,4],"2026-11-14":[17,2],"2026-11-13":[16,3],"2026-11-12":[40,2],"2026-11-10":[11,2],"2026-11-05":[51,1],"2026-11-04":[13,3],"2026-11-03":[38,3],"2026-11-01":[149,3],"2026-10-31":[73,3],"2026-10-20":[6,1],"2026-10-19":[8,1],"2026-10-09":[6,1],"2026-10-08":[9,2],"2026-10-05":[39,1],"2026-10-03":[11,1],"2026-09-25":[35,1],"2026-09-24":[30,1],"2026-09-18":[5,1],"2026-11-06":[5,3],"2026-10-15":[2,1],"2026-10-14":[5,1],"2026-10-07":[13,1],"2026-08-13":[13,1],"2026-08-12":[25,4],"2026-08-11":[7,5],"2026-09-09":[4,1],"2026-09-07":[6,2],"2026-09-06":[2,1],"2026-08-10":[20,6],"2026-08-07":[16,4],"2026-08-04":[36,7],"2026-07-17":[8,3],"2026-07-13":[2,2],"2026-07-09":[1,1],"2026-07-08":[3,1],"2026-07-01":[7,2],"2026-06-14":[12,4],"2026-06-12":[35,4],"2026-06-10":[17,4],"2026-04-19":[8,2],"2026-04-13":[1,1],"2026-04-11":[2,1],"2026-04-10":[4,1],"2025-11-30":[2,1],"2025-11-29":[8,2],"2026-09-23":[3,2],"2026-11-02":[22,2],"2026-09-16":[11,3],"2026-08-25":[26,3],"2026-09-30":[3,1],"2026-10-21":[1,1],"2026-06-09":[65,4],"2026-10-18":[1,1],"2026-10-17":[8,1],"2026-10-16":[5,1],"2026-06-18":[33,1],"2026-09-15":[5,1],"2026-09-10":[1,1],"2026-08-28":[6,2],"2026-08-21":[3,2],"2026-08-19":[12,1],"2026-07-29":[7,1],"2026-07-28":[29,3],"2026-07-18":[58,3],"2026-08-26":[10,1],"2026-06-22":[44,3],"2026-06-21":[14,3],"2026-06-20":[3,1],"2026-06-15":[8,3],"2026-06-11":[9,3],"2026-06-08":[17,2],"2026-06-07":[18,2],"2026-06-23":[7,3],"2026-07-11":[6,2],"2026-07-24":[21,4],"2026-07-21":[64,8],"2026-07-20":[57,4],"2026-07-19":[73,3],"2026-07-04":[1,1],"2026-07-03":[1,1],"2026-07-26":[46,3],"2026-07-25":[7,2],"2026-07-23":[12,3],"2026-08-06":[1,1],"2026-07-16":[11,2],"2026-07-15":[30,2],"2026-07-02":[13,1],"2026-07-31":[31,7],"2026-08-05":[38,3],"2026-08-02":[46,7],"2026-08-01":[46,6],"2026-06-05":[47,4],"2026-06-04":[13,4],"2026-06-03":[77,4],"2026-06-02":[41,4],"2026-06-01":[2,1],"2026-05-31":[6,2],"2026-05-30":[12,1],"2026-08-03":[9,5],"2026-05-23":[6,2],"2026-05-22":[121,8],"2026-05-21":[30,2],"2026-05-16":[31,2],"2026-05-15":[16,1],"2026-05-14":[14,1],"2026-05-13":[5,1],"2026-05-12":[24,5],"2026-07-22":[28,1],"2026-05-25":[9,4],"2026-07-30":[4,1],"2026-05-28":[13,4],"2026-05-20":[10,1],"2026-05-19":[20,1],"2026-05-18":[61,3],"2026-05-17":[17,2],"2026-04-21":[11,1],"2026-04-18":[22,2],"2026-04-17":[8,3],"2026-03-29":[12,1],"2026-03-28":[11,1],"2026-03-27":[5,1],"2026-03-26":[55,2],"2026-03-25":[24,1],"2026-03-19":[5,1],"2026-03-18":[1,1],"2026-03-16":[5,1],"2026-03-09":[1,1],"2026-02-20":[1,1],"2026-02-19":[20,1],"2026-02-18":[1,1],"2026-02-16":[5,1],"2026-02-15":[17,1],"2026-02-14":[25,2],"2026-02-13":[45,3],"2026-02-12":[65,7],"2026-02-11":[42,1],"2026-02-10":[46,4],"2026-06-29":[1,1],"2026-06-28":[23,2],"2026-06-27":[8,1],"2026-05-09":[2,2],"2026-05-08":[13,1],"2026-05-05":[4,1],"2026-05-04":[53,2],"2026-05-03":[53,3],"2026-06-24":[19,1],"2026-06-16":[1,1],"2026-05-29":[3,1],"2026-05-24":[5,1],"2026-04-22":[2,1],"2026-04-16":[2,1],"2026-04-02":[2,1],"2026-02-27":[1,1],"2026-02-26":[1,1],"2026-02-01":[2,1],"2026-01-22":[1,1],"2026-01-01":[2,1],"2025-12-26":[3,1],"2025-12-17":[20,1],"2025-12-16":[1,1],"2025-12-12":[4,1],"2025-06-07":[14,1],"2025-06-06":[13,1],"2025-06-02":[1,1],"2025-05-29":[2,1],"2025-05-25":[3,1],"2025-05-22":[8,1],"2025-05-15":[10,2],"2025-05-14":[7,2],"2025-12-03":[5,1],"2025-12-01":[7,2],"2025-11-28":[14,2],"2025-11-27":[16,1],"2025-11-24":[5,2],"2025-11-17":[7,1],"2025-11-15":[5,1],"2025-11-14":[7,1],"2025-11-12":[5,1],"2025-11-10":[1,1],"2025-11-08":[6,1],"2025-11-07":[2,1],"2025-11-06":[25,2],"2025-11-03":[2,1],"2025-11-01":[4,1],"2025-10-28":[14,1],"2025-10-24":[2,1],"2025-10-23":[2,1],"2025-10-22":[30,1],"2025-10-21":[1,1],"2025-11-26":[5,2],"2025-11-23":[3,1],"2025-11-19":[2,1],"2025-11-18":[4,1],"2025-10-31":[11,1],"2025-10-30":[4,2],"2025-10-27":[1,1],"2025-10-13":[9,1],"2025-09-23":[10,1],"2025-06-15":[20,1],"2025-06-13":[14,2],"2025-06-11":[10,1],"2025-06-08":[20,2],"2025-05-23":[13,1],"2024-12-10":[5,1],"2025-11-13":[2,1],"2025-09-25":[5,1],"2025-10-14":[7,2],"2025-09-28":[8,2],"2025-10-08":[2,1],"2025-10-04":[15,3],"2025-10-03":[19,2]},"projetos":151,"geradoEm":"2026-11-23"};
+const MES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const MESL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const fmt = n => n.toLocaleString('en-US');
+const chave = dt => dt.toISOString().slice(0, 10);
+const utc = s => new Date(s + 'T00:00:00Z');
+const somaDias = (dt, n) => new Date(dt.getTime() + n * 864e5);
+const hoje = utc(D.geradoEm);
+const plural = (n, s) => `${fmt(n)} ${s}${n === 1 ? '' : 's'}`;
+const dataLonga = k => { const d = utc(k); return `${MESL[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`; };
+const dataCurta = k => { const d = utc(k); return `${MES[d.getUTCMonth()]} ${d.getUTCDate()}`; };
+const v = k => (D.dias[k] || [0, 0])[0];
+
+const anosComDados = [...new Set(Object.keys(D.dias).map(k => k.slice(0, 4)))].sort().reverse();
+const periodos = [{ id: 'ultimo', rotulo: 'Last year', ini: somaDias(hoje, -364), fim: hoje }]
+  .concat(anosComDados.map(a => ({ id: a, rotulo: a, ini: utc(a + '-01-01'), fim: a === D.geradoEm.slice(0, 4) ? hoje : utc(a + '-12-31') })));
+
+function niveis(valores) {
+  const nz = valores.filter(x => x > 0).sort((a, b) => a - b);
+  if (!nz.length) return () => 0;
+  const q = p => nz[Math.min(nz.length - 1, Math.floor(p * nz.length))];
+  const [a, b, c] = [q(.25), q(.5), q(.75)];
+  return x => x <= 0 ? 0 : x <= a ? 1 : x <= b ? 2 : x <= c ? 3 : 4;
+}
+
+function desenhar(per) {
+  document.querySelectorAll('#anos button').forEach(b => b.setAttribute('aria-pressed', b.dataset.id === per.id));
+  const inicio = somaDias(per.ini, -per.ini.getUTCDay());
+  const nSem = Math.floor((per.fim - inicio) / 864e5 / 7) + 1;
+  const T = 14, G = 3, P = T + G, X0 = 30, Y0 = 20;
+  const dentro = [];
+  for (let dt = per.ini; dt <= per.fim; dt = somaDias(dt, 1)) dentro.push(v(chave(dt)));
+  const nv = niveis(dentro);
+  const total = dentro.reduce((a, b) => a + b, 0);
+  document.getElementById('titulo').innerHTML = per.id === 'ultimo'
+    ? `<b>${fmt(total)}</b> contributions in the last year` : `<b>${fmt(total)}</b> contributions in ${per.id}`;
+  const svg = document.getElementById('grade');
+  const W = X0 + nSem * P, H = Y0 + 7 * P;
+  svg.setAttribute('width', W); svg.setAttribute('height', H); svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('aria-label', `${total} contributions`);
+  let s = '';
+  [[1, 'Mon'], [3, 'Wed'], [5, 'Fri']].forEach(([d, r]) => { s += `<text x="0" y="${Y0 + d * P + 11}">${r}</text>`; });
+  let mesAnt = -1, xAnt = -99;
+  for (let w = 0; w < nSem; w++) {
+    for (let d = 0; d < 7; d++) {
+      const dt = somaDias(inicio, w * 7 + d);
+      if (dt < per.ini || dt > per.fim) continue;
+      const k = chave(dt);
+      if ((dt.getUTCDate() <= 7 && d === 0) || (w === 0 && d === per.ini.getUTCDay())) {
+        const m = dt.getUTCMonth(), x = X0 + w * P;
+        if (m !== mesAnt && x - xAnt > 30) { s += `<text x="${x}" y="11">${MES[m]}</text>`; xAnt = x; }
+        mesAnt = m;
+      }
+      s += `<rect class="d" data-k="${k}" x="${X0 + w * P}" y="${Y0 + d * P}" width="${T}" height="${T}" fill="var(--l${nv(v(k))})"></rect>`;
+    }
+  }
+  svg.innerHTML = s;
+  numeros(per);
+  meses(per);
+}
+
+function numeros(per) {
+  let ativos = 0, maior = 0, corr = 0, melhor = null, iniCorr = null, iniMaior = null, fimMaior = null;
+  for (let dt = per.ini; dt <= per.fim; dt = somaDias(dt, 1)) {
+    const k = chave(dt), x = v(k);
+    if (x > 0) {
+      ativos++; if (!corr) iniCorr = k; corr++;
+      if (corr > maior) { maior = corr; iniMaior = iniCorr; fimMaior = k; }
+      if (!melhor || x > melhor.x) melhor = { k, x };
+    } else corr = 0;
+  }
+  let atual = 0;
+  for (let dt = per.fim; dt >= per.ini; dt = somaDias(dt, -1)) {
+    if (v(chave(dt)) > 0) atual++; else if (chave(dt) === D.geradoEm) continue; else break;
+  }
+  const totalDias = Math.round((per.fim - per.ini) / 864e5) + 1;
+  document.getElementById('numeros').innerHTML = [
+    [fmt(ativos), `active days, out of ${fmt(totalDias)}`],
+    [plural(maior, 'day'), maior ? `longest streak (${dataCurta(iniMaior)} to ${dataCurta(fimMaior)})` : 'longest streak'],
+    [plural(atual, 'day'), 'current streak'],
+    [melhor ? fmt(melhor.x) : '0', melhor ? `on the busiest day (${dataLonga(melhor.k)})` : 'on the busiest day'],
+  ].map(([a, b]) => `<div><strong>${a}</strong><span>${b}</span></div>`).join('');
+}
+
+function meses(per) {
+  const porMes = {};
+  for (let dt = per.ini; dt <= per.fim; dt = somaDias(dt, 1)) {
+    const x = v(chave(dt)); if (!x) continue;
+    const m = chave(dt).slice(0, 7);
+    porMes[m] = (porMes[m] || 0) + x;
+  }
+  const ms = Object.keys(porMes).sort().reverse();
+  const max = Math.max(1, ...ms.map(m => porMes[m]));
+  document.getElementById('meses').innerHTML = ms.map(m => {
+    const [a, mm] = m.split('-');
+    return `<span>${MES[+mm - 1]} ${a}</span><span class="trilho"><i style="width:${Math.max(2, porMes[m] / max * 100)}%"></i></span><span class="n">${plural(porMes[m], 'contribution')}</span>`;
+  }).join('') || '<span class="n">No contributions in this period.</span>';
+}
+
+const anos = document.getElementById('anos');
+anos.innerHTML = periodos.map(p => `<button type="button" data-id="${p.id}">${p.rotulo}</button>`).join('');
+anos.addEventListener('click', e => { const b = e.target.closest('button'); if (b) desenhar(periodos.find(p => p.id === b.dataset.id)); });
+
+const dica = document.getElementById('dica');
+const grade = document.getElementById('grade');
+grade.addEventListener('mousemove', e => {
+  const r = e.target.closest('rect.d');
+  if (!r) { dica.style.opacity = 0; return; }
+  const k = r.dataset.k, [t, p] = D.dias[k] || [0, 0];
+  dica.innerHTML = t ? `<b>${plural(t, 'contribution')}</b> in ${plural(p, 'project')} on ${dataLonga(k)}` : `No contributions on ${dataLonga(k)}`;
+  dica.style.opacity = 1;
+  const bx = r.getBoundingClientRect(), dw = dica.offsetWidth;
+  dica.style.left = Math.max(8, Math.min(innerWidth - dw - 8, bx.left + bx.width / 2 - dw / 2)) + 'px';
+  dica.style.top = (bx.top - dica.offsetHeight - 8) + 'px';
+});
+grade.addEventListener('mouseleave', () => { dica.style.opacity = 0; });
+
+document.getElementById('nota').textContent =
+  `Read from the edit history of ${fmt(D.projetos)} Overleaf projects across my accounts; days in Brasília time; edits by co-authors alone do not count. Updated ${dataLonga(D.geradoEm)}.`;
+desenhar(periodos[0]);
+</script>
+</body>
+</html>
